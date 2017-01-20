@@ -237,7 +237,7 @@ class DiscordBackend(ErrBot):
             if msg.to.channel is None:
                 msg.to.channel = discord.utils.get(self.client.get_all_channels(), name=msg.to.name)
             recipient = msg.to.channel
-        if mesg.body > 20000:
+        if msg.body > 20000:
             msg.body = "error message too long"
         self.client.loop.create_task(self.client.send_typing(recipient))
         self.client.loop.create_task(self.client.send_message(destination=recipient, content=msg.body))
