@@ -6,7 +6,7 @@ import logging
 import sys
 import discord
 import asyncio
-
+import string
 # Can't use __name__ because of Yapsy
 log = logging.getLogger('errbot.backends.discord')
 
@@ -237,8 +237,7 @@ class DiscordBackend(ErrBot):
             if msg.to.channel is None:
                 msg.to.channel = discord.utils.get(self.client.get_all_channels(), name=msg.to.name)
             recipient = msg.to.channel
-        if len(msg.body) > 1000:
-            msg.body = "error message too long"
+        msg.body = msg.body.split("\n")
         self.client.loop.create_task(self.client.send_typing(recipient))
         self.client.loop.create_task(self.client.send_message(destination=recipient, content=msg.body))
 
